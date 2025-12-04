@@ -1,0 +1,42 @@
+[
+  {
+    "question": "pokaż wszystkie ceny ropy w 2010",
+    "expected_sql": "SELECT date, price FROM oil_prices WHERE date LIKE '2010-%' ORDER BY date;"
+  },
+  {
+    "question": "pokaż trend cen w Q2 2008",
+    "expected_sql": "SELECT date, price FROM oil_prices WHERE date BETWEEN '2008-04-01' AND '2008-06-30' ORDER BY date;"
+  },
+  {
+    "question": "jakie były średnie miesięczne ceny ropy w 2010",
+    "expected_sql": "SELECT substr(date,1,7) AS month, AVG(price) AS price FROM oil_prices WHERE date LIKE '2010-%' GROUP BY month ORDER BY month;"
+  },
+  {
+    "question": "jaka była najwyższa cena w 2014",
+    "expected_sql": "SELECT MAX(price) AS max_price FROM oil_prices WHERE date LIKE '2014-%';"
+  },
+  {
+    "question": "pokaż ceny z Q1 2006",
+    "expected_sql": "SELECT date, price FROM oil_prices WHERE date BETWEEN '2006-01-01' AND '2006-03-31' ORDER BY date;"
+  },
+  {
+    "question": "średnia cena ropy w 2008",
+    "expected_sql": "SELECT AVG(price) AS avg_price FROM oil_prices WHERE date LIKE '2008-%';"
+  },
+  {
+    "question": "trend cen w grudniu 2014",
+    "expected_sql": "SELECT date, price FROM oil_prices WHERE date LIKE '2014-12-%' ORDER BY date;"
+  },
+  {
+    "question": "wszystkie ceny z Q3 2009",
+    "expected_sql": "SELECT date, price FROM oil_prices WHERE date BETWEEN '2009-07-01' AND '2009-09-30' ORDER BY date;"
+  },
+  {
+    "question": "średnie ceny kwartalne dla roku 2011",
+    "expected_sql": "SELECT substr(date,1,7) AS month, AVG(price) AS price FROM oil_prices WHERE date LIKE '2011-%' GROUP BY month ORDER BY month;"
+  },
+  {
+    "question": "trend cen od lipca do września 2010",
+    "expected_sql": "SELECT date, price FROM oil_prices WHERE date BETWEEN '2010-07-01' AND '2010-09-30' ORDER BY date;"
+  }
+]

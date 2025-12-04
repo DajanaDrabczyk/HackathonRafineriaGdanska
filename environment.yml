@@ -1,0 +1,28 @@
+name: llm2sql
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - sqlite
+  - numpy
+  - pandas
+  - pytz
+  - faiss-cpu
+
+  - pip:
+      - sentence-transformers
+      - plotly
+      - streamlit
+      - python-dotenv
+      - matplotlib
+      - requests
+      - ollama
+      - transformers
+      - accelerate
+      - sentencepiece
+      - torch
+      - datasets
+      - huggingface-hub
