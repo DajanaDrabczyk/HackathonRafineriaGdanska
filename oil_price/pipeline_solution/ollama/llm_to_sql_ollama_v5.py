@@ -56,8 +56,6 @@ def sql_firewall(sql: str):
     if any(d in sql_lower for d in dangerous):
         raise ValueError("ZABLOKOWANO niebezpieczne zapytanie!")
 
-    if not sql_lower.startswith("select"):
-        raise ValueError("Dozwolone tylko SELECT.")
 
     return sql
 
