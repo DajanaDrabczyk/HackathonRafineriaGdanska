@@ -1,0 +1,190 @@
+[
+  {
+    "question": "pokaż wszystkie zawody z najwyższym wynagrodzeniem",
+    "expected_sql": "SELECT Job_Title, Average_Salary FROM AI_Impact_on_Jobs_2030 ORDER BY Average_Salary DESC;"
+  },
+  {
+    "question": "jakie są średnie zarobki w całej bazie",
+    "expected_sql": "SELECT AVG(Average_Salary) AS avg_salary FROM AI_Impact_on_Jobs_2030;"
+  },
+  {
+    "question": "pokaż zawody wymagające więcej niż 10 lat doświadczenia",
+    "expected_sql": "SELECT Job_Title, Years_Experience FROM AI_Impact_on_Jobs_2030 WHERE Years_Experience > 10;"
+  },
+  {
+    "question": "które zawody mają niski poziom ryzyka automatyzacji",
+    "expected_sql": "SELECT Job_Title, Automation_Probability_2030 FROM AI_Impact_on_Jobs_2030 WHERE Automation_Probability_2030 < 0.3;"
+  },
+  {
+    "question": "pokaż zawody z najwyższym AI exposure index",
+    "expected_sql": "SELECT Job_Title, AI_Exposure_Index FROM AI_Impact_on_Jobs_2030 ORDER BY AI_Exposure_Index DESC LIMIT 10;"
+  },
+  {
+    "question": "ile zawodów wymaga wykształcenia wyższego",
+    "expected_sql": "SELECT COUNT(*) AS count FROM AI_Impact_on_Jobs_2030 WHERE Education_Level = 'Bachelor' OR Education_Level = 'Master' OR Education_Level = 'PhD';"
+  },
+  {
+    "question": "pokaż zawody o wysokim ryzyku automatyzacji",
+    "expected_sql": "SELECT Job_Title, Automation_Probability_2030 FROM AI_Impact_on_Jobs_2030 WHERE Automation_Probability_2030 >= 0.7 ORDER BY Automation_Probability_2030 DESC;"
+  },
+  {
+    "question": "jakie są średnie zarobki według poziomu wykształcenia",
+    "expected_sql": "SELECT Education_Level, AVG(Average_Salary) AS avg_salary FROM AI_Impact_on_Jobs_2030 GROUP BY Education_Level ORDER BY avg_salary DESC;"
+  },
+  {
+    "question": "pokaż pięć najlepiej opłacanych zawodów wymagających powyżej 5 lat doświadczenia",
+    "expected_sql": "SELECT Job_Title, Average_Salary FROM AI_Impact_on_Jobs_2030 WHERE Years_Experience > 5 ORDER BY Average_Salary DESC LIMIT 5;"
+  },
+  {
+    "question": "które zawody mają najwyższy Tech Growth Factor",
+    "expected_sql": "SELECT Job_Title, Tech_Growth_Factor FROM AI_Impact_on_Jobs_2030 ORDER BY Tech_Growth_Factor DESC;"
+  },
+  {
+    "question": "pokaż zawody z kategorią ryzyka high",
+    "expected_sql": "SELECT Job_Title, Risk_Category FROM AI_Impact_on_Jobs_2030 WHERE Risk_Category = 'High';"
+  },
+  {
+    "question": "pokaż zawody z kategorią ryzyka medium",
+    "expected_sql": "SELECT Job_Title, Risk_Category FROM AI_Impact_on_Jobs_2030 WHERE Risk_Category = 'Medium';"
+  },
+  {
+    "question": "pokaż zawody z kategorią ryzyka low",
+    "expected_sql": "SELECT Job_Title, Risk_Category FROM AI_Impact_on_Jobs_2030 WHERE Risk_Category = 'Low';"
+  },
+  {
+    "question": "policz ile jest zawodów z każdej kategorii ryzyka",
+    "expected_sql": "SELECT Risk_Category, COUNT(*) AS count FROM AI_Impact_on_Jobs_2030 GROUP BY Risk_Category;"
+  },
+  {
+    "question": "pokaż zawody z najniższymi zarobkami",
+    "expected_sql": "SELECT Job_Title, Average_Salary FROM AI_Impact_on_Jobs_2030 ORDER BY Average_Salary ASC LIMIT 10;"
+  },
+  {
+    "question": "jakie są średnie doświadczenie wymagane dla zawodów o wysokim ryzyku automatyzacji",
+    "expected_sql": "SELECT AVG(Years_Experience) AS avg_experience FROM AI_Impact_on_Jobs_2030 WHERE Automation_Probability_2030 >= 0.7;"
+  },
+  {
+    "question": "pokaż wszystkie umiejętności dla danego zawodu",
+    "expected_sql": "SELECT Skill_1, Skill_2, Skill_3, Skill_4, Skill_5, Skill_6, Skill_7, Skill_8, Skill_9, Skill_10 FROM AI_Impact_on_Jobs_2030 WHERE Job_Title = 'DATA ENGINEER';"
+  },
+  {
+    "question": "pokaż zawody wymagające mniej niż 3 lata doświadczenia",
+    "expected_sql": "SELECT Job_Title, Years_Experience FROM AI_Impact_on_Jobs_2030 WHERE Years_Experience < 3;"
+  },
+  {
+    "question": "pokaż zawody z najwyższym AI Exposure Index w kategorii low risk",
+    "expected_sql": "SELECT Job_Title, AI_Exposure_Index FROM AI_Impact_on_Jobs_2030 WHERE Risk_Category = 'Low' ORDER BY AI_Exposure_Index DESC LIMIT 10;"
+  },
+  {
+    "question": "pokaż top 3 zawody z największym prawdopodobieństwem automatyzacji",
+    "expected_sql": "SELECT Job_Title, Automation_Probability_2030 FROM AI_Impact_on_Jobs_2030 ORDER BY Automation_Probability_2030 DESC LIMIT 3;"
+  },
+  {
+    "question": "pokaż średnie wynagrodzenie według kategorii ryzyka",
+    "expected_sql": "SELECT Risk_Category, AVG(Average_Salary) AS avg_salary FROM AI_Impact_on_Jobs_2030 GROUP BY Risk_Category;"
+  },
+  {
+    "question": "pokaż zawody z najwyższym AI Exposure Index i niskimi zarobkami",
+    "expected_sql": "SELECT Job_Title, AI_Exposure_Index, Average_Salary FROM AI_Impact_on_Jobs_2030 WHERE Average_Salary < 60000 ORDER BY AI_Exposure_Index DESC;"
+  },
+  {
+    "question": "znajdź zawody które wymagają konkretnej umiejętności Python",
+    "expected_sql": "SELECT Job_Title FROM AI_Impact_on_Jobs_2030 WHERE Skill_1 = 'Python' OR Skill_2 = 'Python' OR Skill_3 = 'Python' OR Skill_4 = 'Python' OR Skill_5 = 'Python' OR Skill_6 = 'Python' OR Skill_7 = 'Python' OR Skill_8 = 'Python' OR Skill_9 = 'Python' OR Skill_10 = 'Python';"
+  },
+  {
+    "question": "pokaż zawody z wysokim wzrostem technologicznym i niskim ryzykiem automatyzacji",
+    "expected_sql": "SELECT Job_Title, Tech_Growth_Factor, Automation_Probability_2030 FROM AI_Impact_on_Jobs_2030 WHERE Tech_Growth_Factor > 0.7 AND Automation_Probability_2030 < 0.3;"
+  },
+  {
+    "question": "policz zawody wymagające doświadczenia powyżej średniej",
+    "expected_sql": "SELECT COUNT(*) AS count FROM AI_Impact_on_Jobs_2030 WHERE Years_Experience > (SELECT AVG(Years_Experience) FROM AI_Impact_on_Jobs_2030);"
+  },
+  {
+    "question": "pokaż zawody z najwyższym współczynnikiem wzrostu technologicznego",
+    "expected_sql": "SELECT Job_Title, Tech_Growth_Factor FROM AI_Impact_on_Jobs_2030 ORDER BY Tech_Growth_Factor DESC LIMIT 5;"
+  },
+  {
+    "question": "znajdź zawody o średnich zarobkach powyżej mediany",
+    "expected_sql": "SELECT Job_Title, Average_Salary FROM AI_Impact_on_Jobs_2030 WHERE Average_Salary > (SELECT AVG(Average_Salary) FROM AI_Impact_on_Jobs_2030);"
+  },
+  {
+    "question": "pokaż zawody wymagające wykształcenia PhD",
+    "expected_sql": "SELECT Job_Title FROM AI_Impact_on_Jobs_2030 WHERE Education_Level = 'PhD';"
+  },
+  {
+    "question": "pokaż zawody z najwyższym poziomem AI exposure dla wykształcenia Bachelor",
+    "expected_sql": "SELECT Job_Title, AI_Exposure_Index FROM AI_Impact_on_Jobs_2030 WHERE Education_Level = 'Bachelor' ORDER BY AI_Exposure_Index DESC;"
+  },
+  {
+    "question": "pokaż zawody o niskim doświadczeniu i wysokich zarobkach",
+    "expected_sql": "SELECT Job_Title, Years_Experience, Average_Salary FROM AI_Impact_on_Jobs_2030 WHERE Years_Experience < 3 ORDER BY Average_Salary DESC LIMIT 10;"
+  },
+  {
+    "question": "pokaż zawody z najwyższym ryzykiem automatyzacji w kategorii high",
+    "expected_sql": "SELECT Job_Title, Automation_Probability_2030 FROM AI_Impact_on_Jobs_2030 WHERE Risk_Category = 'High' ORDER BY Automation_Probability_2030 DESC LIMIT 5;"
+  },
+  {
+    "question": "pokaż średni poziom AI exposure dla zawodów wymagających powyżej 8 lat doświadczenia",
+    "expected_sql": "SELECT AVG(AI_Exposure_Index) AS avg_exposure FROM AI_Impact_on_Jobs_2030 WHERE Years_Experience > 8;"
+  },
+  {
+    "question": "jakie są najwyżej płatne zawody wymagające wykształcenia Master",
+    "expected_sql": "SELECT Job_Title, Average_Salary FROM AI_Impact_on_Jobs_2030 WHERE Education_Level = 'Master' ORDER BY Average_Salary DESC LIMIT 5;"
+  },
+  {
+    "question": "pokaż zawody z najniższym AI exposure index",
+    "expected_sql": "SELECT Job_Title, AI_Exposure_Index FROM AI_Impact_on_Jobs_2030 ORDER BY AI_Exposure_Index ASC LIMIT 10;"
+  },
+  {
+    "question": "policz zawody wymagające konkretnej umiejętności SQL",
+    "expected_sql": "SELECT COUNT(*) AS count FROM AI_Impact_on_Jobs_2030 WHERE Skill_1 = 'SQL' OR Skill_2 = 'SQL' OR Skill_3 = 'SQL' OR Skill_4 = 'SQL' OR Skill_5 = 'SQL' OR Skill_6 = 'SQL' OR Skill_7 = 'SQL' OR Skill_8 = 'SQL' OR Skill_9 = 'SQL' OR Skill_10 = 'SQL';"
+  },
+  {
+    "question": "pokaż zawody z Tech Growth Factor powyżej 0.8",
+    "expected_sql": "SELECT Job_Title, Tech_Growth_Factor FROM AI_Impact_on_Jobs_2030 WHERE Tech_Growth_Factor > 0.8;"
+  },
+  {
+    "question": "pokaż zawody z ryzykiem automatyzacji pomiędzy 0.3 a 0.6",
+    "expected_sql": "SELECT Job_Title, Automation_Probability_2030 FROM AI_Impact_on_Jobs_2030 WHERE Automation_Probability_2030 BETWEEN 0.3 AND 0.6;"
+  },
+  {
+    "question": "średnie zarobki dla kategorii ryzyka medium",
+    "expected_sql": "SELECT AVG(Average_Salary) AS avg_salary FROM AI_Impact_on_Jobs_2030 WHERE Risk_Category = 'Medium';"
+  },
+  {
+    "question": "pokaż zawody z pięcioma najczęściej powtarzającymi się skillami",
+    "expected_sql": "SELECT Job_Title, Skill_1, Skill_2, Skill_3, Skill_4, Skill_5 FROM AI_Impact_on_Jobs_2030;"
+  },
+  {
+    "question": "pokaż zawody z najniższym doświadczeniem",
+    "expected_sql": "SELECT Job_Title, Years_Experience FROM AI_Impact_on_Jobs_2030 ORDER BY Years_Experience ASC LIMIT 10;"
+  },
+  {
+    "question": "pokaż średnie AI exposure według kategorii ryzyka",
+    "expected_sql": "SELECT Risk_Category, AVG(AI_Exposure_Index) AS avg_exposure FROM AI_Impact_on_Jobs_2030 GROUP BY Risk_Category;"
+  },
+  {
+    "question": "pokaż top 10 zawodów najbardziej zagrożonych automatyzacją",
+    "expected_sql": "SELECT Job_Title, Automation_Probability_2030 FROM AI_Impact_on_Jobs_2030 ORDER BY Automation_Probability_2030 DESC LIMIT 10;"
+  },
+  {
+    "question": "znajdź zawody wymagające jednocześnie SQL i Python",
+    "expected_sql": "SELECT Job_Title FROM AI_Impact_on_Jobs_2030 WHERE (Skill_1 = 'Python' OR Skill_2 = 'Python' OR Skill_3 = 'Python' OR Skill_4 = 'Python' OR Skill_5 = 'Python' OR Skill_6 = 'Python' OR Skill_7 = 'Python' OR Skill_8 = 'Python' OR Skill_9 = 'Python' OR Skill_10 = 'Python') AND (Skill_1 = 'SQL' OR Skill_2 = 'SQL' OR Skill_3 = 'SQL' OR Skill_4 = 'SQL' OR Skill_5 = 'SQL' OR Skill_6 = 'SQL' OR Skill_7 = 'SQL' OR Skill_8 = 'SQL' OR Skill_9 = 'SQL' OR Skill_10 = 'SQL');"
+  },
+  {
+    "question": "pokaż średnie wynagrodzenie według lat doświadczenia",
+    "expected_sql": "SELECT Years_Experience, AVG(Average_Salary) AS avg_salary FROM AI_Impact_on_Jobs_2030 GROUP BY Years_Experience ORDER BY Years_Experience;"
+  },
+  {
+    "question": "pokaż zawody z wykształceniem bachelor i wysokim AI exposure",
+    "expected_sql": "SELECT Job_Title, AI_Exposure_Index FROM AI_Impact_on_Jobs_2030 WHERE Education_Level = 'Bachelor' ORDER BY AI_Exposure_Index DESC LIMIT 10;"
+  },
+  {
+    "question": "jakie zawody mają najniższy tech growth factor",
+    "expected_sql": "SELECT Job_Title, Tech_Growth_Factor FROM AI_Impact_on_Jobs_2030 ORDER BY Tech_Growth_Factor ASC LIMIT 5;"
+  },
+  {
+    "question": "pokaż zawody z największą liczbą wymaganych umiejętności",
+    "expected_sql": "SELECT Job_Title, Skill_1, Skill_2, Skill_3, Skill_4, Skill_5, Skill_6, Skill_7, Skill_8, Skill_9, Skill_10 FROM AI_Impact_on_Jobs_2030;"
+  }
+]
