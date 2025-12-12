@@ -18,7 +18,16 @@ embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Wypisz zasady RAG
 rag_chunks = [
-
+"Tabela crude_assays ma kolumny: oil_type (TEXT)|, api_gravity (REAL), sulfur_pct (REAL), origin (TEXT).",
+"Kolumna oil_type jest także nazywana nazwą ropy",
+"Kolumna api_gravity jest także nazywana gęstością ropy",
+"Kolumna sulfur_pct jest także nazywana zawartością siarki",
+"Kolumna origin jest także nazywana krajem bądź regionem pochodzenia",
+"Kolumna sulfur_pct zawiera wartości wyrażone w procentach",
+"Im większa wartość gęstości API tym lżejsza ropa",
+"Im niższa wartość zawartości siarki tym słodsza ropa",
+"Tabela zawsze nazywa się crude_assays",
+"Regiony i kraje to geograficzne nazwy, na przykład USA Russia Saudi Arabia"
 ]
 
 def build_faiss(chunks):
@@ -38,7 +47,8 @@ def retrieve_context(query, k=3):
 def build_prompt(question, context):
     return f"""
 
-    Prompt
+     Prompt
+     "Jesteś analitykiem danych i ekspertem w SQLLite. Masz dostęp do tabeli: crude_assays(oil_type, api_gravity, sulfur_pct, origin). Napisz zapytanie SQL, które poda ilość rop w każdym regionie. Jako dopowiedź zwracasz kod SQL."
 
 
 Kontekst pomocniczy:
@@ -53,7 +63,7 @@ SQL:
 
 def call_ollama(prompt):
     result = subprocess.run(
-    ["ollama", "run", "model llm tutaj"],
+    ["ollama", "run", "sqlcoder:latest"],
     input=prompt,
     capture_output=True,
     text=True
