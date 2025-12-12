@@ -1,0 +1,46 @@
+[
+{
+    "question": "pokaż 4 wiersze",
+    "expected_sql": "SELECT * FROM crude_assays LIMIT 4"
+    },
+{
+    "question": "wyświetl średnią siarki dla ropy WTI",
+    "expected_sql": "SELECT AVG(sulfur_pct) FROM crude_assays WHERE oil_type = 'WTI'"
+    },
+{
+    "question": "Pokaż wszystkie ropy z Qataru",
+    "expected_sql": "SELECT origin, oil_type WHERE origin LIKE 'Qatar'"
+    },
+    {
+    "question": "Podaj maksymalną API",
+    "expected_sql": "SELECT MAX(api_gravity) FROM crude_assays}"
+},
+{
+  "question": "Podaj najniższą zawartość siarki (%) w ropie",
+  "expected_sql": "SELECT MIN(sulfur_pct) FROM crude_assays"
+},
+{
+  "question": "Podaj średnią zawartość siarki (%) dla ropy pochodzącej z Bliskiego Wschodu",
+  "expected_sql": "SELECT AVG(sulfur_pct) FROM crude_assays WHERE origin = 'Bliski Wschód'"
+},
+{
+  "question": "Podaj liczbę różnych gatunków ropy w tabeli",
+  "expected_sql": "SELECT COUNT(DISTINCT oil_type) FROM crude_assays"
+},
+{
+  "question": "Podaj gatunki ropy o zawartości siarki mniejszej niż 0.5%",
+  "expected_sql": "SELECT oil_type FROM crude_assays WHERE sulfur_pct < 0.5"
+},
+{
+  "question": "Podaj gatunki ropy z najwyższą zawartością siarki",
+  "expected_sql": "SELECT oil_type FROM crude_assays WHERE sulfur_pct = (SELECT MAX(sulfur_pct) FROM crude_assays)"
+},
+{
+  "question": "Podaj gatunki ropy o API w przedziale 30–40",
+  "expected_sql": "SELECT oil_type FROM crude_assays WHERE api_gravity BETWEEN 30 AND 40"
+},
+{
+  "question": "Podaj średnią zawartość siarki (%) dla ropy pochodzącej z Bliskiego Wschodu",
+  "expected_sql": "SELECT AVG(sulfur_pct) FROM crude_assays WHERE origin = 'Bliski Wschód'"
+}
+]
