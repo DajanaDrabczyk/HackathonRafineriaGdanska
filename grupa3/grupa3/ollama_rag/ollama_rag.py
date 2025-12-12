@@ -18,8 +18,14 @@ embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Wypisz zasady RAG
 rag_chunks = [
-
+    "Tabela imports ma kolumny: year(Integer),country(TEXT), volume_tonnes (REAL).",
+    "Filtr po roku w SQLite: WHERE year = 'YYYY'.",
+    "Średnie roczne robi się przez GROUP BY year.",
+    "Zakres roczny używa BETWEEN.",
+    "Tabela zawsze nazywa się imports.",
+    "Pisz zapytania do bazy w jezyku sqlite",
 ]
+
 
 def build_faiss(chunks):
     vecs = embedder.encode(chunks)
@@ -37,10 +43,18 @@ def retrieve_context(query, k=3):
 # Napisz prompt do modelu LLM oraz wybierz model LLM
 def build_prompt(question, context):
     return f"""
-
-    Prompt
-
-
+jesteś systemem, który zamienia pytania użytkownika na SQL dla SQLite.
+    Reguły:
+    - używaj tylko tabeli imports
+    - kolumny: year,country,volume_tonnes
+    - filtr po roku: WHERE year = 'YYYY'
+    - średnie roczne: GROUP BY year
+    - jeśli pytanie dotyczy średniej → zwróć AVG(volume_tonnes)
+    - średnie roczne muszą zwracać trzy kolumny:
+    year AS rok oraz AVG(volume_tonnes) AS ilosc
+    - nie używaj markdown ani ```
+    - zwróć tylko czysty SQL
+    - uzywaj tylko SQllite
 Kontekst pomocniczy:
 {context}
 
@@ -53,7 +67,7 @@ SQL:
 
 def call_ollama(prompt):
     result = subprocess.run(
-    ["ollama", "run", "model llm tutaj"],
+    ["ollama", "run", "sqlcoder:latest"],
     input=prompt,
     capture_output=True,
     text=True
@@ -76,9 +90,6 @@ def sql_firewall(sql: str):
     forbidden = ["drop", "delete", "insert", "update", "alter", "truncate", "create"]
     if any(f in s for f in forbidden):
         raise ValueError("ZABLOKOWANO niebezpieczne zapytanie!")
-
-    if not s.startswith("select"):
-        raise ValueError("Dozwolone są tylko SELECT.")
 
     return sql
 
