@@ -1,0 +1,6 @@
+[
+    {
+        "question": "Pokaż wszystkie ropy z Qataru",
+        "expected_sql": "SELECT origin, oil_type WHERE origin LIKE Qatar"
+    }
+]
