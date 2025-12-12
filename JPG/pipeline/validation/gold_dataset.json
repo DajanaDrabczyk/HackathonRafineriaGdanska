@@ -1,0 +1,42 @@
+[
+  {
+    "question": "pokaż wszystkie zawody z roku 2030",
+    "expected_sql": "SELECT * FROM AI_Impact_on_Jobs_2030 WHERE year = 2030;"
+  },
+  {
+    "question": "jakie są średnie zarobki w branży IT",
+    "expected_sql": "SELECT AVG(average_salary) AS avg_salary FROM AI_Impact_on_Jobs_2030 WHERE industry = 'IT';"
+  },
+  {
+    "question": "pokaż wszystkie zawody z wysokim ryzykiem automatyzacji",
+    "expected_sql": "SELECT job_title, automation_risk FROM AI_Impact_on_Jobs_2030 WHERE automation_risk >= 0.7 ORDER BY automation_risk DESC;"
+  },
+  {
+    "question": "które zawody mają impact score powyżej 80",
+    "expected_sql": "SELECT job_title, impact_score FROM AI_Impact_on_Jobs_2030 WHERE impact_score > 80 ORDER BY impact_score DESC;"
+  },
+  {
+    "question": "pokaż średnie zarobki według branż",
+    "expected_sql": "SELECT industry, AVG(average_salary) AS avg_salary FROM AI_Impact_on_Jobs_2030 GROUP BY industry ORDER BY avg_salary DESC;"
+  },
+  {
+    "question": "jakie są trzy najlepiej opłacane zawody",
+    "expected_sql": "SELECT job_title, average_salary FROM AI_Impact_on_Jobs_2030 ORDER BY average_salary DESC LIMIT 3;"
+  },
+  {
+    "question": "pokaż zawody z branży finansowej z niskim ryzykiem automatyzacji",
+    "expected_sql": "SELECT job_title, automation_risk FROM AI_Impact_on_Jobs_2030 WHERE industry = 'Finance' AND automation_risk < 0.3 ORDER BY automation_risk ASC;"
+  },
+  {
+    "question": "ile jest zawodów o średnim wynagrodzeniu powyżej 100000",
+    "expected_sql": "SELECT COUNT(*) AS count FROM AI_Impact_on_Jobs_2030 WHERE average_salary > 100000;"
+  },
+  {
+    "question": "pokaż średni impact score dla branży healthcare",
+    "expected_sql": "SELECT AVG(impact_score) AS avg_impact FROM AI_Impact_on_Jobs_2030 WHERE industry = 'Healthcare';"
+  },
+  {
+    "question": "które zawody w roku 2030 mają najniższe ryzyko automatyzacji",
+    "expected_sql": "SELECT job_title, automation_risk FROM AI_Impact_on_Jobs_2030 WHERE year = 2030 ORDER BY automation_risk ASC LIMIT 5;"
+  }
+]
