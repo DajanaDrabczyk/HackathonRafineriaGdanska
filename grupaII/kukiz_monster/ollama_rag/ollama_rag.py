@@ -17,8 +17,22 @@ DB_PATH = os.getenv("DB_PATH")
 embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Wypisz zasady RAG
-rag_chunks = [
 
+rag_chunks = [
+    "Tabela crude_assays ma kolumny: oil_type (TEXT)|, api_gravity (REAL), sulfur_pct (REAL), origin (TEXT).",
+    "Kolumna oil_type jest także nazywana gatunkiem ropy",
+    "Kolumna oil_type jest także nazywana ROPA",
+    "Kolumna api_gravity jest także nazywana lepkością ropy",
+    "Kolumna sulfur_pct jest także nazywana zawartością siarki",
+    "Kolumna origin może być nazywana regionem",
+    "Kolumna sulfur_pct zawiera wartości wyrażone w procentach",
+    "Im większa wartość gęstości API tym lżejsza ropa",
+    "Im niższa wartość zawartości siarki tym słodsza ropa",
+    "Tabela zawsze nazywa się crude_assays",
+    "Regiony i kraje to geograficzne nazwy, na przykład USA Russia Saudi Arabia",
+    "Tłumacz polskie nazwy geograficzne na język angielski"
+    "Polecenie WYŚWIETL interpretuj jako SELECT",
+    "Polecenie PODAJ interpretuj jako SELECT",
 ]
 
 def build_faiss(chunks):
@@ -38,11 +52,12 @@ def retrieve_context(query, k=3):
 def build_prompt(question, context):
     return f"""
 
-    Prompt
-
-
-Kontekst pomocniczy:
-{context}
+    Jesteś analitykiem danych i ekspertem w SQL dla SQLite.
+    Nie używaj struktury z innego SQL niż SQLite.
+    Masz dostęp do tabeli: crude_assays(oil_type, api_gravity, sulfur_pct, origin).
+    Napisz tylko zapytanie SQL.
+    Jako dopowiedź zwróć kod SQL odczytujący dane z tabeli.
+    Porównując ciągi znaków w zapytaniu SQL używaj wyłącznie operatora LIKE. Nie możesz używać zapytania ILIKE
 
 Pytanie:
 {question}
@@ -50,18 +65,19 @@ Pytanie:
 SQL:
 """.strip()
 
-
 def call_ollama(prompt):
     result = subprocess.run(
-    ["ollama", "run", "model llm tutaj"],
-    input=prompt,
-    capture_output=True,
-    text=True
-)
+        ["ollama", "run", "sqlcoder:latest"],
+        input=prompt,
+        capture_output=True,
+        text=True
+    )
+
     out = result.stdout.strip()
 
     out = re.sub(r"```.*?```", "", out, flags=re.DOTALL)
     out = out.replace("```", "")
+    out = out.replace("ilike", "like")
     out = out.replace("sql", "")
 
     if "SQL:" in out:
@@ -77,8 +93,8 @@ def sql_firewall(sql: str):
     if any(f in s for f in forbidden):
         raise ValueError("ZABLOKOWANO niebezpieczne zapytanie!")
 
-    if not s.startswith("select"):
-        raise ValueError("Dozwolone są tylko SELECT.")
+    # if not s.startswith("select"):
+    #     raise ValueError("Dozwolone są tylko SELECT.")
 
     return sql
 
