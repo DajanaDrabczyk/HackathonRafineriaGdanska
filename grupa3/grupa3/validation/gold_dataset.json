@@ -1,0 +1,20 @@
+[
+    {"question":"pokaż 5 największych importów",
+    "expected_sql": "Select max(volume_tonnes) from imports"
+    },
+     {"question":"pokaż średnioroczny import z podziałem na lata",
+      "expected_sql": "Select avg(volume_tonnes) from imports GROUP BY year."
+    },
+    {"question":"pokaż kraj z największym importem",
+      "expected_sql": "Select country from imports where volume_tonnes=max(volume_tonnes)."
+    },
+      {"question":"pokaż kraj z najmniejszym importem",
+      "expected_sql": "Select country from imports where volume_tonnes=min(volume_tonnes)."
+    },
+      {"question":"pokaż importy z podziałem na kraje",
+      "expected_sql": "Select * from imports group by country."
+    }
+
+
+
+]

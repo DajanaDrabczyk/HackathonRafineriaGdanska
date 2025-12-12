@@ -18,6 +18,11 @@ embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Wypisz zasady RAG
 rag_chunks = [
+    "Tabela imports ma kolumny: year(Integer),country(TEXT), volume_tonnes (REAL).",
+    "Filtr po roku w SQLite: WHERE year = 'YYYY'.",
+    "Średnie roczne robi się przez GROUP BY year.",
+    "Zakres roczny używa BETWEEN.",
+    "Tabela zawsze nazywa się imports."
 
 ]
 
@@ -38,8 +43,18 @@ def retrieve_context(query, k=3):
 def build_prompt(question, context):
     return f"""
 
-    Prompt
-
+   Jesteś systemem, który zamienia pytania użytkownika na SQL dla SQLite.
+    Reguły:
+    - używaj tylko tabeli imports
+    - kolumny: year,country,volume_tonnes
+    - filtr po roku: WHERE year = 'YYYY'
+    - średnie roczne: GROUP BY year
+    - jeśli pytanie dotyczy średniej → zwróć AVG(volume_tonnes)
+    - średnie roczne muszą zwracać trzy kolumny:
+    year AS rok oraz AVG(volume_tonnes) AS ilosc
+    -wyświetl wszystkie rekordy: select * from imports
+    - nie używaj markdown ani ```
+    - zwróć tylko czysty SQL
 
 Kontekst pomocniczy:
 {context}
@@ -53,7 +68,7 @@ SQL:
 
 def call_ollama(prompt):
     result = subprocess.run(
-    ["ollama", "run", "model llm tutaj"],
+    ["ollama", "run", "sqlcoder:latest"],
     input=prompt,
     capture_output=True,
     text=True

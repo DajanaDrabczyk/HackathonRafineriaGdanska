@@ -19,9 +19,17 @@ embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Wypisz zasady RAG
 rag_chunks = [
+    "Tabela imports ma kolumny: year(Integer),country(TEXT), volume_tonnes (REAL).",
+    "import użyj tabeli import",
+    "przy maksymalnych wartościach nie frupuj",
+    "Filtr po roku w SQLite: WHERE year='YYYY'.",
+    "Średnie roczne robi się przez GROUP BY year.",
+    "Zakres roczny używa BETWEEN.",
+    "Wyświetl wszystkie rekordy select * from imports limit 10",
+    "Maksymalny import: select max(volume_tonnes) from imports limit "
+    "Tabela zawsze nazywa się imports."
 
 ]
-
 
 def build_faiss_index(chunks):
     vectors = embedder.encode(chunks)
@@ -40,7 +48,19 @@ def retrieve_context(query, k=3):
 def generate_sql(question: str, context: str):
     prompt = f"""
 
-    Treść promptu
+    Jesteś systemem, który zamienia pytania użytkownika na SQL dla SQLite.
+    Reguły:
+    -używaj tylko SQLite
+    - używaj tylko tabeli imports
+    - kolumny: year,country,volume_tonnes
+    - filtr po roku: WHERE year =
+    - średnie roczne: GROUP BY year
+    - jeśli pytanie dotyczy średniej → zwróć AVG(volume_tonnes)
+    - średnie roczne muszą zwracać trzy kolumny:
+    year AS rok oraz AVG(volume_tonnes) AS ilosc
+    -używaj tylo tabeli imports
+    - nie używaj markdown ani ```
+    - zwróć tylko czysty SQLlte
 
 # Kontekst RAG:
 {context}
@@ -52,7 +72,7 @@ SQL:
 """.strip()
 
     result = subprocess.run(
-        ["ollama", "run", "model llm tutaj"],
+        ["ollama", "run", "sqlcoder:latest"],
         input=prompt,
         capture_output=True,
         text=True
@@ -106,8 +126,8 @@ def plot(df, title):
     return None
 
 
-st.set_page_config(page_title="Oil Price AI", layout="wide")
-st.title("Oil Price Demo AI — RAG + Ollama")
+st.set_page_config(page_title="Importy AI", layout="wide")
+st.title("Importy Demo AI — RAG + Ollama")
 st.caption("Hackathon Edition — Nazwa grupy")
 
 question = st.text_input("Zadaj pytanie:")

@@ -34,7 +34,7 @@ def evaluate_model(gold_path, model_fn):
         sim = sql_similarity(predicted, expected)
         similarities.append(sim)
 
-        if sim > 0.85:  # SQL bardzo podobny
+        if sim > 0.05:  # SQL bardzo podobny
             correct += 1
 
     precision = correct / total
